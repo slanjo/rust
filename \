@@ -1,0 +1,22 @@
+struct Computer {
+    name: String,
+    cpu_count: u16,
+    ram: usize, 
+}
+//struct ServerRack {
+//    slot_1: Computer;
+//    slot_1: Computer;
+//    slot_1: Computer;       
+//}
+fn create_computer(name: String, cpu_count: u16, ram: usize) -> Computer {
+    let computer = Computer {
+        name: a_name, 
+        cpu_count: cpu_count;
+        ram: ram, 
+    };
+
+    computer
+}
+fn main() {
+let computer = create_computer("Nonsense".to_string(), cpu_count: 3, ram: 16_000_000);
+}

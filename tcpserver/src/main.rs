@@ -1,10 +1,38 @@
-use std::net::TcpListener;
-use std::net::TcpStream;// OR we can do - use std::net::{TcpListener, TcpStream}
+use std::net::{TcpListener, TcpStream};
+//use std::net::TcpStream;// OR we can do - use std::net::{TcpListener, TcpStream}
+struct Config {
+    addr: String,
+    max_connections: usize,
+}
 
+fn run_server(config: Config) {
+   let listener = TcpListener::bind(&config.addr).expect("Failed to listen");
+
+   let mut connections: Vec<TcpStream> = Vec::with_capacity(config.max_connections); 
+
+   loop {
+       match listener.accept() {
+           Ok( (stream, addr) ) => {
+             if connections.len() >= config.max_connections{
+                eprintln!("max connections reached");
+                continue; //stream is freed
+              }
+
+             eprintln!("Accepted connection from: {:?}", addr);
+             connections.push(stream);
+
+           }
+           Err(e) => eprintln!("{:?}", e),
+       }
+   }
+}
 
 fn main() {
-    let server = TcpListener::bind("127.0.0.1:6000").unwrap();
-    println!("Listening on port 6000");
-    let connection = server.accept();
-    println!("Client connected. Bye!");
+
+    let config = Config {
+        addr: "127.0.0.1:6000".to_string(),
+        max_connections: 3,
+    };
+
+    run_server(config);
 }
