@@ -5,7 +5,9 @@ fn main() {
 //  let string = String::from("127.0.0.1:8080");
 //  let string_slice = &string[10..14]; //[10..] would work. also [..5] would work if we wanted a slice from the begining of the 
 //  let string_borrow: &str = &string;
-//  let string_literal = "1234";
+//
+
+
 //  dbg!(&string);
 //  dbg!(string_slice);
 //  dbg!(string_borrow);
@@ -24,21 +26,25 @@ pub struct Server {
 }
 
 impl Server{
-//can have two types of functionalities that we can associate with implementation
+//can have two types of functionalities that we can associate with struct 
 //methods and associated functions
 //methods are defined in the context of the struct
 //methods always take a special first parameter "self"
 //associated funcitons are called with "::"
 //    fn new(addr: String) -> Server {// upper case Self is an alias for the name of the struct. 
                                     //so we can use Slef instead of the server
-     pub fn new(addr: String) -> Self {
+//Create an associated function
+     pub fn new(addr: String) -> Self { //"Self" is an alias for struct name "Server"
 //        Server {
         Self{
 //            addr: addr
             addr
         }
     }
-    pub fn run(self) {
+//Create a method:
+    pub fn run(self) { //<<< the run function takes the ownership of the whole struct due to "self"
+                        //if we didn't want that we could do &self or &mut self
+
         println!("Listening on {}",self.addr);
     }
 }
